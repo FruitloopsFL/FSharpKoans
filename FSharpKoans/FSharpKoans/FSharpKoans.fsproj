@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Helpers.fs" />
+    <Compile Include="AboutTesting.fs" />
+    <Compile Include="AboutBinding.fs" />
+    <Compile Include="AboutFunctions.fs" />
+    <Compile Include="AboutMatching.fs" />
+    <Compile Include="AboutIteration.fs" />
+    <Compile Include="AboutTuples.fs" />
+    <Compile Include="AboutDiscriminatedUnions.fs" />
+    <Compile Include="AboutParametricPolymorphism.fs" />
+    <Compile Include="AboutOptions.fs" />
+    <Compile Include="AboutLists.fs" />
+    <Compile Include="AboutStrings.fs" />
+    <Compile Include="AboutListOperations.fs" />
+    <Compile Include="AboutRecords.fs" />
+    <Compile Include="AboutYou.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FsUnit" Version="3.4.0" />
+    <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+  </ItemGroup>
+
+</Project>
