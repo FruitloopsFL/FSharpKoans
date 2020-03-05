@@ -146,8 +146,8 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``20 Functions have types`` () =
         let a x y = x + "cabbage" + y
         let b r = 50.0 / r
-        a |> should be ofType<string>
-        b |> should be ofType<float>
+        a "red" "yellow" |> should be ofType<string>
+        b 25.0 |> should be ofType<float>
 
 
     [<Test>]
@@ -166,10 +166,10 @@ module ``03: Putting the Function into Functional Programming`` =
     *)
         let somefunc x y = x + y x
         let square v = v * v
-        somefunc 3 square |> should equal __
-        somefunc 3 ((*) 7) |> should equal __
-        somefunc 10 ((+) 8) |> should equal __
-        somefunc 5 (fun z -> z + 22) |> should equal __
+        somefunc 3 square |> should equal 12
+        somefunc 3 ((*) 7) |> should equal 24
+        somefunc 10 ((+) 8) |> should equal 28
+        somefunc 5 (fun z -> z + 22) |> should equal 32
 
    (*
        Did you know that operators like +, -, =, >, and so on, are actually
@@ -204,10 +204,10 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``23 |>, the 'pipe' operator`` () =
         let add5 a = a + 5
         let double a = a * 2
-        3 |> add5 |> double |> should equal __  // <-- start with three, add 5, then double. Readable, isn't it?
-        3 |> double |> add5 |> should equal __
-        6 |> add5 |> add5 |> should equal __
-        8 |> double |> double |> add5 |> should equal __
+        3 |> add5 |> double |> should equal 16  // <-- start with three, add 5, then double. Readable, isn't it?
+        3 |> double |> add5 |> should equal 11
+        6 |> add5 |> add5 |> should equal 16
+        8 |> double |> double |> add5 |> should equal 37
 
     (*
         The pipe operator takes:
@@ -224,8 +224,8 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``24 The output type of one pipe must be the input type to the next`` () =
         let a x = x * 2.5
         let b x = x = 7.5
-        a |> should be ofType<FILL_ME_IN>
-        b |> should be ofType<FILL_ME_IN>
+        a |> should be ofType<float>
+        b |> should be ofType<float>
         __ |> __ |> __ |> should equal true
 
     (*
@@ -247,7 +247,7 @@ module ``03: Putting the Function into Functional Programming`` =
         let a x =
             x = 4
         not (a 4) |> should equal false
-        (__ __ a 4) |> should equal false // <-- put <| in one of the spaces to fill in
+        (not <| a 4) |> should equal false // <-- put <| in one of the spaces to fill in
 
     (*
         The compose operator takes:
@@ -272,10 +272,10 @@ module ``03: Putting the Function into Functional Programming`` =
         let j = double >> add5
         let k = double >> double >> add5
         let l = j >> i
-        i 3 |> should equal __
-        j 3 |> should equal __
-        k 3 |> should equal __
-        l 3 |> should equal __
+        i 3 |> should equal 16
+        j 3 |> should equal 11
+        k 3 |> should equal 17
+        l 3 |> should equal 32
 
     [<Test>]
     let ``27 <<, the 'backwards compose' operator`` () =
@@ -285,24 +285,24 @@ module ``03: Putting the Function into Functional Programming`` =
         let j = double << add5
         let k = double << double << add5
         let l = j << i
-        i 3 |> should equal __
-        j 3 |> should equal __
-        k 3 |> should equal __
-        l 3 |> should equal __
+        i 3 |> should equal 11
+        j 3 |> should equal 16
+        k 3 |> should equal 32
+        l 3 |> should equal 32
 
     [<Test>]
     let ``28 Unit is used when there is no return value for a function``() = 
         // sendData is a function which is invoked ONLY for its side-effects
         // It might do something, and then it gives back a unit value.
         let sendData data = ()
-        sendData "some data to send..." |> should equal ___ // ... don't overthink this one!
+        sendData "some data to send..." |> should equal () // ... don't overthink this one!
    
     [<Test>]
     let ``29 Unit, as an input, conveys no data`` () = 
         let sayHello () = "hello"
-        sayHello |> should be ofType<FILL_ME_IN>
-        sayHello () |> should be ofType<FILL_ME_IN>
-        sayHello () |> should equal __
+        sayHello |> should be ofType<unit>
+        sayHello () |> should be ofType<string>
+        sayHello () |> should equal "hello"
 
     (*
     When we develop real systems, we often run into problems
