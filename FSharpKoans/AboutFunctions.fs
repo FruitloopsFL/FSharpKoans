@@ -146,8 +146,8 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``20 Functions have types`` () =
         let a x y = x + "cabbage" + y
         let b r = 50.0 / r
-        a "red" "yellow" |> should be ofType<string>
-        b 25.0 |> should be ofType<float>
+        a |> should be ofType<string -> string -> string>
+        b |> should be ofType<float -> float>
 
 
     [<Test>]
@@ -224,9 +224,9 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``24 The output type of one pipe must be the input type to the next`` () =
         let a x = x * 2.5
         let b x = x = 7.5
-        a |> should be ofType<float>
-        b |> should be ofType<float>
-        __ |> __ |> __ |> should equal true
+        a |> should be ofType<float -> float>
+        b |> should be ofType<float -> bool>
+        a 1.2 |> a |> b |> should equal true
 
     (*
         The backwards-pipe operator takes:
@@ -300,7 +300,7 @@ module ``03: Putting the Function into Functional Programming`` =
     [<Test>]
     let ``29 Unit, as an input, conveys no data`` () = 
         let sayHello () = "hello"
-        sayHello |> should be ofType<unit>
+        sayHello |> should be ofType<unit -> string>
         sayHello () |> should be ofType<string>
         sayHello () |> should equal "hello"
 
@@ -333,12 +333,12 @@ module ``03: Putting the Function into Functional Programming`` =
         let divideBy10 n () =
             n / 10
         let deferred = divideBy10 700
-        divideBy10 |> should be ofType<FILL_ME_IN>
-        deferred |> should be ofType<FILL_ME_IN>
-        divideBy10 850 |> should be ofType<FILL_ME_IN>
-        deferred () |> should be ofType<FILL_ME_IN>
-        deferred () |> should equal __
-        divideBy10 6300 () |> should equal __
+        divideBy10 |> should be ofType<int -> unit -> int>
+        deferred |> should be ofType<unit -> int>
+        divideBy10 850 |> should be ofType<unit -> int>
+        deferred () |> should be ofType<int>
+        deferred () |> should equal 70
+        divideBy10 6300 () |> should equal 630
 
     (*
         Sometimes we want to do something purely for a side-effect
@@ -346,7 +346,7 @@ module ``03: Putting the Function into Functional Programming`` =
         file just so that we can get to the next line.  In these cases,
         we use the `ignore` function to throw away a return value.
     *)
-
+    
     [<Test>]
     let ``31 The 'ignore' function is used to map anything to 'unit'`` () =
         // this next function has a side-effect: it prints something out.
@@ -354,9 +354,9 @@ module ``03: Putting the Function into Functional Programming`` =
             // print out the value of x
             printfn "%A" x
             x // return x
-        log 5 |> should equal __
-        ignore (log "blorp") |> should equal __
-        log 19.66 |> ignore |> should equal __
+        log 5 |> should equal 5
+        ignore (log "blorp") |> should equal ()
+        log 19.66 |> ignore |> should equal ()
 
     [<Test>]
     let ``32 Partially specifying arguments (Part 1).`` () =
@@ -364,15 +364,15 @@ module ``03: Putting the Function into Functional Programming`` =
         // reuse functionality.  This technique is exceptionally flexible and often
         // seen in functional code, so you should try to understand it.
         let f animal noise = animal + " says " + noise
-        let kittehs = __ "cat"
-        __ "nyan" |> should equal "cat says nyan"
+        let kittehs = f "cat"
+        kittehs "nyan" |> should equal "cat says nyan"
 
     [<Test>]
     let ``33 Partially specifying arguments (Part 2).`` () =
         // as above, but what do you do when the arguments aren't in the order
         // that you want them to be in?
         let f animal noise = animal + " says " + noise
-        let howl k = __ // <- multiple words on this line.  You MUST use `f`.
+        let howl k = f k "slash/crunch/snap" // <- multiple words on this line.  You MUST use `f`.
         howl "dire wolf" |> should equal "dire wolf says slash/crunch/snap"
         howl "direr wolf" |> should equal "direr wolf says slash/crunch/snap"
 
@@ -381,7 +381,8 @@ module ``03: Putting the Function into Functional Programming`` =
         // Extending a bit more, what do you do when you want to apply a function,
         // but modify the result before you give it back?
         let f animal noise = animal + " says " + noise
-        let cows = __ // <-- multiple words on this line, or you may want to make this a multi-line thing.  You MUST use `f`.
+        let cows = fun k -> 
+            f "cow" (k + ", de gozaru")// <-- multiple words on this line, or you may want to make this a multi-line thing.  You MUST use `f`.
         cows "moo" |> should equal "cow says moo, de gozaru"
         cows "MOOooOO" |> should equal "cow says MOOooOO, de gozaru"
 
@@ -391,8 +392,8 @@ module ``03: Putting the Function into Functional Programming`` =
             let middle = (final - initial) / 2
             fun t -> t-middle, t+middle
         // note the number of inputs provided below.  Do you see why I can do this?
-        calculate 10 20 5 |> should equal __
-        calculate 0 600 250 |> should equal __
+        calculate 10 20 5 |> should equal (0, 10)
+        calculate 0 600 250 |> should equal (-50, 550)
 
     [<Test>]
     let ``36 Using a value defined in an inner scope`` () =
@@ -400,15 +401,15 @@ module ``03: Putting the Function into Functional Programming`` =
         let g t =
             let result = ((t%2)+1) * 10
             fun x -> result - x
-        g 5 8 |> should equal __
-        g 8 5 |> should equal __
+        g 5 8 |> should equal 12
+        g 8 5 |> should equal 5
         // PS. I hope this one brought you some closure.
 
     [<Test>]
     let ``37 An operator is just a function in disguise`` () =
         let apply f x =
             f x 3
-        apply (/) 27 |> should equal __
-        apply (*) 4 |> should equal __
-        apply (+) 13 |> should equal __
-        apply (-) 8 |> should equal __
+        apply (/) 27 |> should equal 9
+        apply (*) 4 |> should equal 12
+        apply (+) 13 |> should equal 16
+        apply (-) 8 |> should equal 5

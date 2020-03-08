@@ -1,0 +1,13 @@
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.dll
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.pdb
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\nunit.engine.netstandard.dll
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\FSharpKoans.deps.json
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\FSharpKoans.runtimeconfig.json
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\FSharpKoans.runtimeconfig.dev.json
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\FSharpKoans.dll
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\bin\Debug\netcoreapp2.2\FSharpKoans.pdb
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\obj\Debug\netcoreapp2.2\FSharpKoans.fsprojAssemblyReference.cache
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\obj\Debug\netcoreapp2.2\FSharpKoans.AssemblyInfoInputs.cache
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\obj\Debug\netcoreapp2.2\FSharpKoans.AssemblyInfo.fs
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\obj\Debug\netcoreapp2.2\FSharpKoans.dll
+C:\Users\Legion_FL\Documents\prac1F\FSharpKoans\obj\Debug\netcoreapp2.2\FSharpKoans.pdb

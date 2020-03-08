@@ -33,7 +33,7 @@ module ``07: The Good Kind of Discrimination`` =
         let aDegree = BSc (Linguistics, ComputerScience)
         let anotherDegree = BPharm
         let philosopherKing = Masters Philosophy
-        aDegree |> should be ofType<Subject*Subject> 
+        aDegree |> should be ofType<UndergraduateDegree> 
         anotherDegree |> should be ofType<UndergraduateDegree> 
         philosopherKing |> should be ofType<PostgraduateDegree> 
    
@@ -44,18 +44,18 @@ module ``07: The Good Kind of Discrimination`` =
             | BSc (_, ComputerScience) | BSc (ComputerScience, _) -> "Good choice!"
             | BSc _ -> "!!SCIENCE!!"
             | BPharm -> "Meh, it's OK."
-            | FILL_ME_IN -> "Money, money, money."
-            | FILL_ME_IN -> "A thinker, eh?"
-        randomOpinion __ |> should equal "Good choice!"
-        randomOpinion __ |> should equal "!!SCIENCE!!"
+            | BCom (Management, _) | BCom (_, Management) -> "Money, money, money."
+            | BA (_, Philosophy) | BA (Philosophy, _) -> "A thinker, eh?"
+        randomOpinion (BSc (ComputerScience, Linguistics)) |> should equal "Good choice!"
+        randomOpinion (BSc (Mathematics, Philosophy)) |> should equal "!!SCIENCE!!"
         randomOpinion (BCom (Management, Economics)) |> should equal "Money, money, money."
         randomOpinion (BCom (Linguistics, Management)) |> should equal "Money, money, money."
         randomOpinion (BA (Linguistics, Philosophy)) |> should equal "A thinker, eh?"
-        randomOpinion __ |> should equal "Meh, it's OK."
+        randomOpinion BPharm |> should equal "Meh, it's OK."
 
     [<Test>]
     let ``03 We can create a discriminated union using named fields`` () =
-        let someDegree = BSc (second = __, first = __)            
+        let someDegree = BSc (second = Mathematics, first = ComputerScience)            
         someDegree |> should equal (BSc (ComputerScience, Mathematics))
 
     [<Test>]
@@ -73,8 +73,8 @@ module ``07: The Good Kind of Discrimination`` =
 
     [<Test>]
     let ``05 A discriminated union case with associated data is a function`` () =
-        Broken |> should be ofType<FILL_ME_IN>
-        Rented |> should be ofType<FILL_ME_IN>
+        Broken |> should be ofType<int -> EquipmentStatus>
+        Rented |> should be ofType<string -> EquipmentStatus>
 
     type BinaryTree =
     | Empty
