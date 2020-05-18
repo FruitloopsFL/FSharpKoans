@@ -178,7 +178,7 @@ module ``02: About Binding`` =
     let ``11 Constant patterns fail if the sides don't match exactly`` () =
         // fill in something below, on the right-hand side, to make this pattern FAIL
         (fun () -> 
-            let "FILL ME IN" = failwith "cannot match"
+            let "FILL ME IN" = "pls fail"
             () 
         ) |> should throw typeof<MatchFailureException>
 
